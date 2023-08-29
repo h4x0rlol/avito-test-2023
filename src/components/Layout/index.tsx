@@ -15,7 +15,7 @@ const headerStyle: React.CSSProperties = {
   justifyContent: 'center',
   textAlign: 'center',
   color: 'rgba(255,255,255,.5)',
-  minHeight: '64px',
+  height: '64px',
   paddingInline: 50,
   fontSize: '2rem',
   lineHeight: '64px',
@@ -26,16 +26,14 @@ const headerStyle: React.CSSProperties = {
 
 const contentStyle: React.CSSProperties = {
   textAlign: 'center',
-  height: 'calc(100vh - 124px)',
   width: '100%',
-  padding: '16px 16px',
+  padding: '16px',
+  minHeight: 'auto',
   backgroundColor: '#30363d',
   color: '#aaa',
 };
 
 const footerStyle: React.CSSProperties = {
-  position: 'fixed',
-  bottom: 0,
   height: '60px',
   width: '100%',
   fontSize: '1rem',
@@ -46,8 +44,20 @@ const footerStyle: React.CSSProperties = {
 
 export default function Layout({ header, content }: LayoutProps) {
   return (
-    <Space direction="vertical" style={{ width: '100%', height: '100vh' }}>
-      <AntdLayout>
+    <Space
+      direction="vertical"
+      style={{ width: '100%', height: '100vh' }}
+      styles={{
+        item: {
+          height: '100%',
+        },
+      }}
+    >
+      <AntdLayout
+        style={{
+          height: '100%',
+        }}
+      >
         <Header style={headerStyle}>{header}</Header>
         <Content style={contentStyle}>{content}</Content>
         <Footer style={footerStyle}>

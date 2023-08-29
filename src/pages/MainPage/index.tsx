@@ -50,12 +50,17 @@ function MainPageContent() {
             }}
           >
             <Select placeholder="Select a platform" options={GamePlatformsOptions} />
-            <Select placeholder="Select a genre" mode="multiple" options={GameTagsOptions} />
+            <Select
+              placeholder="Select a genre"
+              mode="multiple"
+              maxTagCount={matches ? 50 : 'responsive'}
+              options={GameTagsOptions}
+            />
             <Select placeholder="Sort by" options={GameSortingOptions} />
           </Space>
         </Card>
       </Col>
-      <Col flex="1 0 60%">
+      <Col flex={matches ? '1 0 60%' : 'auto'}>
         {!isError && <VirtualizedGamesList games={data ?? []} loading={isFetching} />}
         {isError && <Error error={error} />}
       </Col>
