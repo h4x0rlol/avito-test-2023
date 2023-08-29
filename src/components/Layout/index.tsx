@@ -28,7 +28,7 @@ const contentStyle: React.CSSProperties = {
   textAlign: 'center',
   height: 'calc(100vh - 124px)',
   width: '100%',
-  padding: '10px 20px',
+  padding: '16px 16px',
   backgroundColor: '#30363d',
   color: '#aaa',
 };
@@ -46,7 +46,7 @@ const footerStyle: React.CSSProperties = {
 
 export default function Layout({ header, content }: LayoutProps) {
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+    <Space direction="vertical" style={{ width: '100%', height: '100vh' }}>
       <AntdLayout>
         <Header style={headerStyle}>{header}</Header>
         <Content style={contentStyle}>{content}</Content>

@@ -4,25 +4,27 @@ import VirtualizedGamesList from '../../components/VirtualizedGamesList';
 import { GamePlatformsOptions, GameSortingOptions, GameTagsOptions, useGetGamesListQuery } from '../../api';
 import Select from '../../components/Select';
 import Error from '../../components/Error';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useMediaQuery } from '../../hooks';
 
 function MainPageContent() {
   const matches = useMediaQuery('(min-width: 768px)');
 
-  const { data, isFetching, isError, error } = useGetGamesListQuery({
-    platform: 'pc',
-    tags: ['mmorpg'],
-    sorting: 'alphabetical',
-  });
+  const { data, isFetching, isError, error } = useGetGamesListQuery(
+    {
+      platform: 'pc',
+      tags: ['mmorpg'],
+      sorting: 'alphabetical',
+    },
+    {},
+  );
 
   return (
     <Row
-      gutter={16}
       wrap={false}
       style={{
         height: '100%',
         display: 'flex',
+        gap: '16px',
         flexDirection: matches ? 'row' : 'column',
       }}
     >
@@ -53,14 +55,9 @@ function MainPageContent() {
           </Space>
         </Card>
       </Col>
-      <Col
-        flex="1 0 65%"
-        style={{
-          marginTop: matches ? '0' : '12px',
-        }}
-      >
+      <Col flex="1 0 60%">
         {!isError && <VirtualizedGamesList games={data ?? []} loading={isFetching} />}
-        {isError && <Error error={error as FetchBaseQueryError} />}
+        {isError && <Error error={error} />}
       </Col>
     </Row>
   );

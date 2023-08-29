@@ -16,7 +16,7 @@ export default function Select(props: SelectProps) {
         ...props.style,
       }}
       allowClear={props.allowClear ?? true}
-      optionFilterProp="children"
+      optionFilterProp={props.optionFilterProp ?? 'children'}
       filterOption={(input, option) =>
         String(option?.label ?? '')
           .toLowerCase()

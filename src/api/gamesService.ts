@@ -4,7 +4,6 @@ import { GameListFilters, GamesList, gamesListSchema } from '.';
 
 export const gamesApi = createApi({
   reducerPath: 'gamesApi',
-  tagTypes: ['Games'],
   baseQuery: fetchBaseQuery({
     baseUrl: API_BASE_URL,
     prepareHeaders: headers => {

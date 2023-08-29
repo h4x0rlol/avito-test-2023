@@ -14,15 +14,17 @@ type VirtualizedGamesListProps = {
 
 export default function VirtualizedGamesList({ games, loading }: VirtualizedGamesListProps) {
   return (
-    <List itemLayout="vertical" loading={loading}>
+    <List
+      itemLayout="vertical"
+      grid={{
+        gutter: 12,
+      }}
+      loading={loading}
+    >
       <VirtualList data={games} height={ContainerHeight} itemHeight={ItemHeight} itemKey="id">
-        {(game, index) => (
+        {game => (
           <Link key={game.id} to={`/${game.id}`}>
-            <List.Item
-              style={{
-                marginTop: index === 0 ? '-12px' : '0',
-              }}
-            >
+            <List.Item>
               <GameListItem game={game} />
             </List.Item>
           </Link>

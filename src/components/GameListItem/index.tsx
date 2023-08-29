@@ -1,7 +1,6 @@
 import { BankOutlined, BookOutlined, CalendarOutlined } from '@ant-design/icons';
-import { Card } from 'antd';
+import { Card, Image } from 'antd';
 import IconText from '../IconText';
-import Image from '../Image';
 import { GamesList } from '../../api';
 
 type GameListItemProps = {
@@ -29,7 +28,7 @@ export default function GameListItem({ game }: GameListItemProps) {
           gap: '2rem',
         }}
       >
-        <Image width={200} src={game.thumbnail} alt={game.title} />
+        <Image preview={false} width={200} src={game.thumbnail} alt={game.title} />
         <div
           style={{
             display: 'flex',
