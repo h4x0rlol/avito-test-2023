@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-const gamesListSchema = z
+export const gamesListSchema = z
   .object({
     id: z.number(),
     title: z.string(),
-    release_date: z.coerce.date(),
+    release_date: z.string(),
     publisher: z.string(),
     genre: z.string(),
     thumbnail: z.string(),

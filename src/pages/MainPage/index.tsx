@@ -1,22 +1,37 @@
 import { Card, Col, Row, Space } from 'antd';
 import Layout from '../../components/Layout';
 import VirtualizedGamesList from '../../components/VirtualizedGamesList';
-import { GamePlatformsOptions, GameSortingOptions, GameTagsOptions } from '../../api';
+import { GamePlatformsOptions, GameSortingOptions, GameTagsOptions, useGetGamesListQuery } from '../../api';
 import Select from '../../components/Select';
+import Error from '../../components/Error';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { useMediaQuery } from '../../hooks';
 
 function MainPageContent() {
+  const matches = useMediaQuery('(min-width: 768px)');
+
+  const { data, isFetching, isError, error } = useGetGamesListQuery({
+    platform: 'pc',
+    tags: ['mmorpg'],
+    sorting: 'alphabetical',
+  });
+
   return (
     <Row
       gutter={16}
+      wrap={false}
       style={{
         height: '100%',
+        display: 'flex',
+        flexDirection: matches ? 'row' : 'column',
       }}
     >
-      <Col flex={2}>
+      <Col flex="1 0 35%">
         <Card
           title="Filters"
           headStyle={{
             color: '#ffff',
+            fontSize: '1.5rem',
           }}
           style={{
             width: '100%',
@@ -33,55 +48,19 @@ function MainPageContent() {
             }}
           >
             <Select placeholder="Select a platform" options={GamePlatformsOptions} />
-            <Select placeholder="Select a genre" options={GameTagsOptions} />
+            <Select placeholder="Select a genre" mode="multiple" options={GameTagsOptions} />
             <Select placeholder="Sort by" options={GameSortingOptions} />
           </Space>
         </Card>
       </Col>
-      <Col flex={5}>
-        <VirtualizedGamesList
-          games={[
-            {
-              id: 1,
-              title: 'выфвыфвыфвфвыфв',
-              genre: 'sss',
-              release_date: new Date(),
-              publisher: 'sss',
-              thumbnail: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            },
-            {
-              id: 2,
-              title: 'sss',
-              genre: 'sss',
-              release_date: new Date(),
-              publisher: 'sss',
-              thumbnail: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            },
-            {
-              id: 3,
-              title: 'sss',
-              genre: 'sss',
-              release_date: new Date(),
-              publisher: 'sss',
-              thumbnail: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            },
-            {
-              id: 4,
-              title: 'sss',
-              genre: 'sss',
-              release_date: new Date(),
-              publisher: 'sss',
-              thumbnail: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            },
-            { id: 5, title: 'sss', genre: 'sss', release_date: new Date(), publisher: 'sss', thumbnail: 'sss' },
-            { id: 6, title: 'sss', genre: 'sss', release_date: new Date(), publisher: 'sss', thumbnail: 'sss' },
-            { id: 7, title: 'sss', genre: 'sss', release_date: new Date(), publisher: 'sss', thumbnail: 'sss' },
-            { id: 8, title: 'sss', genre: 'sss', release_date: new Date(), publisher: 'sss', thumbnail: 'sss' },
-            { id: 9, title: 'sss', genre: 'sss', release_date: new Date(), publisher: 'sss', thumbnail: 'sss' },
-            { id: 10, title: 'sss', genre: 'sss', release_date: new Date(), publisher: 'sss', thumbnail: 'sss' },
-            { id: 11, title: 'sss', genre: 'sss', release_date: new Date(), publisher: 'sss', thumbnail: 'sss' },
-          ]}
-        />
+      <Col
+        flex="1 0 65%"
+        style={{
+          marginTop: matches ? '0' : '12px',
+        }}
+      >
+        {!isError && <VirtualizedGamesList games={data ?? []} loading={isFetching} />}
+        {isError && <Error error={error as FetchBaseQueryError} />}
       </Col>
     </Row>
   );

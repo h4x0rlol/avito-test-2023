@@ -13,13 +13,13 @@ export default function GameListItem({ game }: GameListItemProps) {
     <Card
       title={game.title}
       headStyle={{
-        fontSize: '1.2rem',
+        fontSize: '1.5rem',
         color: '#ffff',
       }}
       style={{
         backgroundColor: '#272b30',
         color: '#ffff',
-        fontSize: '1rem',
+        fontSize: '1.2rem',
         borderColor: 'rgba(28,28,28,.6)',
       }}
     >
@@ -34,12 +34,12 @@ export default function GameListItem({ game }: GameListItemProps) {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'flex-end',
+            justifyContent: 'flex-start',
           }}
         >
           <IconText icon={BankOutlined} text={`Publisher: ${game.publisher}`} />
           <IconText icon={BookOutlined} text={`Genre: ${game.genre}`} />
-          <IconText icon={CalendarOutlined} text={`Release date: ${game.release_date.toISOString()}`} />
+          <IconText icon={CalendarOutlined} text={`Release date: ${game.release_date}`} />
         </div>
       </div>
     </Card>

@@ -19,3 +19,7 @@ html {
 .ant-card-head {
   border-bottom: 1px solid rgba(28, 28, 28, 0.6) !important;
 }
+
+.ant-col {
+  min-height: auto !important;
+}

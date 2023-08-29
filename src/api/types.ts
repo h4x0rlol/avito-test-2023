@@ -65,3 +65,9 @@ export const GameSortingMatching = {
 export const GameSortingOptions = (Object.keys(GameSortingMatching) as Array<keyof typeof GameSortingMatching>).map(
   k => ({ value: k, label: GameSortingMatching[k] }),
 );
+
+export type GameListFilters = {
+  platform: keyof typeof GamePlatformsMatching;
+  tags: Array<(typeof GameTagsOptions)[number]['value']>;
+  sorting: keyof typeof GameSortingMatching;
+};

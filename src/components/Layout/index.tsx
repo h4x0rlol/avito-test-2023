@@ -15,7 +15,7 @@ const headerStyle: React.CSSProperties = {
   justifyContent: 'center',
   textAlign: 'center',
   color: 'rgba(255,255,255,.5)',
-  minHeight: 64,
+  minHeight: '64px',
   paddingInline: 50,
   fontSize: '2rem',
   lineHeight: '64px',
@@ -26,7 +26,7 @@ const headerStyle: React.CSSProperties = {
 
 const contentStyle: React.CSSProperties = {
   textAlign: 'center',
-  height: 'calc(100vh - 130px)',
+  height: 'calc(100vh - 124px)',
   width: '100%',
   padding: '10px 20px',
   backgroundColor: '#30363d',
@@ -36,6 +36,7 @@ const contentStyle: React.CSSProperties = {
 const footerStyle: React.CSSProperties = {
   position: 'fixed',
   bottom: 0,
+  height: '60px',
   width: '100%',
   fontSize: '1rem',
   textAlign: 'center',
