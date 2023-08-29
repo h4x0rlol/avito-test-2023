@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom';
-import { z } from 'zod';
 import NotFound from '../NotFound';
+import { gameIdSchema } from '../../utils';
 
 export default function GamePage() {
   const { id } = useParams();
 
-  const gameId = z.coerce.number().int().nonnegative().safeParse(id);
+  const { success: isGameIdValid } = gameIdSchema.safeParse(id);
 
-  if (!gameId.success) {
+  if (!isGameIdValid) {
     return <NotFound />;
   }
 

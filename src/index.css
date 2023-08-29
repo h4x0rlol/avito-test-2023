@@ -7,3 +7,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+html {
+  font-size: 16px;
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+  }
+}
+
+.ant-card-head {
+  border-bottom: 1px solid rgba(28, 28, 28, 0.6) !important;
+}
