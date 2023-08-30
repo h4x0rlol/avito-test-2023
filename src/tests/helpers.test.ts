@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { LOCALES, formatDate, isValidDate } from '../utils';
+import { LOCALES, formatDate, isEmptyObject, isValidDate } from '../utils';
 
 describe('Helpers tests', () => {
   test('Should return true, if argument (except null) can be coerced to Date', () => {
@@ -24,5 +24,13 @@ describe('Helpers tests', () => {
     expect(formatDate('2023-06-07', LOCALES.en)).toBe('6/7/2023');
     expect(formatDate('2023-08-30T16:15:01.114Z')).toBe('30.08.2023');
     expect(formatDate(23132132121)).toBe('25.09.1970');
+  });
+
+  test('Should return true if argument is empty object, otherwise false', () => {
+    expect(isEmptyObject({ a: 1 })).toBe(false);
+    expect(isEmptyObject([])).toBe(false);
+    expect(isEmptyObject(new Date())).toBe(false);
+    expect(isEmptyObject(new Map())).toBe(false);
+    expect(isEmptyObject({})).toBe(true);
   });
 });

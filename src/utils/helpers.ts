@@ -18,6 +18,6 @@ export function formatDate(date: unknown, locale: keyof typeof LOCALES = LOCALES
   return null;
 }
 
-export function isEmptyObject(obj: object) {
+export function isEmptyObject(obj: object): obj is Record<string, never> {
   return z.object({}).strict().safeParse(obj).success;
 }
