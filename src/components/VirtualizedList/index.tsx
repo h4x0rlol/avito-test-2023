@@ -1,9 +1,20 @@
 import VirtualList from 'rc-virtual-list';
 import { List } from 'antd';
 import React from 'react';
+import { useMediaQuery } from '../../hooks';
+import { BREAKPOINTS } from '../../utils';
 
-const ContainerHeight = 400;
-const ItemHeight = 50;
+const MOBILE_CONTAINER_HEIGHT = 300;
+const ITEM_HEIGHT = 50;
+
+function getContainerHeight() {
+  if (typeof window === 'undefined') {
+    return 0;
+  }
+
+  // 100vh - header, footer and padding
+  return window.innerHeight - 160;
+}
 
 type VirtualizedListProps<T extends { id: string | number }> = {
   items: T[];
@@ -20,6 +31,10 @@ export default function VirtualizedList<T extends { id: string | number }>({
   containerHeight,
   itemHeight,
 }: VirtualizedListProps<T>) {
+  const isTablet = useMediaQuery(BREAKPOINTS.tablet);
+
+  const height = containerHeight ? containerHeight : isTablet ? getContainerHeight() : MOBILE_CONTAINER_HEIGHT;
+
   return (
     <List
       itemLayout="vertical"
@@ -28,12 +43,7 @@ export default function VirtualizedList<T extends { id: string | number }>({
       }}
       loading={loading}
     >
-      <VirtualList
-        data={items}
-        height={containerHeight ?? ContainerHeight}
-        itemHeight={itemHeight ?? ItemHeight}
-        itemKey="id"
-      >
+      <VirtualList data={items} height={height} itemHeight={itemHeight ?? ITEM_HEIGHT} itemKey="id">
         {item => (
           <List.Item key={item.id}>
             <ItemComponent item={item} />

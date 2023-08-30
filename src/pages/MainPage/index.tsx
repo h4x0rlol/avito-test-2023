@@ -17,8 +17,6 @@ function MainPageContent() {
   const filters = useAppSelector(state => state.gamesListFiltersReducer);
   const { setPlatform, setSorting, setCategory } = gamesListFiltersSlice.actions;
 
-  console.log(filters);
-
   const isEmptyFilters = isFiltersEmpty(filters);
 
   const { data, isFetching, isError, error } = useGetGamesListQuery(filters, {

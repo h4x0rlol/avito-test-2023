@@ -20,3 +20,7 @@ html {
 .ant-card-head {
   border-bottom: 1px solid rgba(28, 28, 28, 0.6) !important;
 }
+
+.ant-spin-container > :first-child {
+  min-height: auto !important;
+}
