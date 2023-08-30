@@ -1,26 +1,29 @@
 import { Card, Col, Result, Row, Space } from 'antd';
 import Layout from '../../components/Layout';
-import { gamePlatformsOptions, gameSortingOptions, gameTagsOptions, useGetGamesListQuery } from '../../api';
+import { gamePlatformsOptions, gameSortingOptions, gameCategoriesOptions, useGetGamesListQuery } from '../../api';
 import Select from '../../components/Select';
 import Error from '../../components/Error';
 import { useMediaQuery } from '../../hooks';
 import VirtualizedList from '../../components/VirtualizedList';
 import GameListItem from '../../components/GameListItem';
-import { BREAKPOINTS, MAX_SELECT_ITEMS } from '../../utils';
+import { BREAKPOINTS, isFiltersEmpty } from '../../utils';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { gamesListFiltersSlice } from '../../store/reducers/GamesListFiltersSlice';
 
 function MainPageContent() {
   const isTablet = useMediaQuery(BREAKPOINTS.tablet);
 
-  const { data, isFetching, isError, error } = useGetGamesListQuery(
-    {
-      platform: 'pc',
-      tags: ['mmorpg'],
-      sorting: 'alphabetical',
-    },
-    {
-      skip: true,
-    },
-  );
+  const dispatch = useAppDispatch();
+  const filters = useAppSelector(state => state.gamesListFiltersReducer);
+  const { setPlatform, setSorting, setCategory } = gamesListFiltersSlice.actions;
+
+  console.log(filters);
+
+  const isEmptyFilters = isFiltersEmpty(filters);
+
+  const { data, isFetching, isError, error } = useGetGamesListQuery(filters, {
+    skip: isEmptyFilters,
+  });
 
   return (
     <Row
@@ -53,14 +56,24 @@ function MainPageContent() {
               width: '100%',
             }}
           >
-            <Select placeholder="Select a platform" options={gamePlatformsOptions} />
             <Select
-              placeholder="Select a genre"
-              mode="multiple"
-              maxTagCount={isTablet ? MAX_SELECT_ITEMS : 'responsive'}
-              options={gameTagsOptions}
+              placeholder="Select a platform"
+              value={filters.platform}
+              onChange={e => dispatch(setPlatform(e))}
+              options={gamePlatformsOptions}
             />
-            <Select placeholder="Sort by" options={gameSortingOptions} />
+            <Select
+              placeholder="Select a category"
+              value={filters.category}
+              onChange={e => dispatch(setCategory(e))}
+              options={gameCategoriesOptions}
+            />
+            <Select
+              placeholder="Sort by"
+              value={filters['sort-by']}
+              onChange={e => dispatch(setSorting(e))}
+              options={gameSortingOptions}
+            />
           </Space>
         </Card>
       </Col>
@@ -72,10 +85,12 @@ function MainPageContent() {
               <span
                 style={{
                   color: '#ffff',
-                  fontSize: '1rem',
+                  fontSize: '1.2rem',
                 }}
               >
-                No games were found with these filters
+                {isEmptyFilters
+                  ? 'To find some games select filters from the menu'
+                  : ' No games were found with these filters'}
               </span>
             }
           />

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '../utils';
-import { GameListFilters, GamesList, gamesListSchema } from '.';
+import { GamesListFilters, GamesList, gamesListSchema } from '.';
 
 export const gamesApi = createApi({
   reducerPath: 'gamesApi',
@@ -13,14 +13,10 @@ export const gamesApi = createApi({
     },
   }),
   endpoints: builder => ({
-    getGamesList: builder.query<GamesList, GameListFilters>({
+    getGamesList: builder.query<GamesList, GamesListFilters>({
       query: filters => ({
-        url: '/filter',
-        params: {
-          tag: filters.tags.join('.'),
-          platform: filters.platform,
-          'sort-by': filters.sorting,
-        },
+        url: '/games',
+        params: filters,
       }),
       transformResponse: response => {
         return gamesListSchema.parse(response);

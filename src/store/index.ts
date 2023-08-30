@@ -1,11 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
 import { gamesApi } from '../api';
+import gamesListFiltersReducer from './reducers/GamesListFiltersSlice';
+
+const rootReducer = combineReducers({
+  gamesListFiltersReducer,
+  [gamesApi.reducerPath]: gamesApi.reducer,
+});
 
 export const store = configureStore({
-  reducer: {
-    [gamesApi.reducerPath]: gamesApi.reducer,
-  },
+  reducer: rootReducer,
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(gamesApi.middleware),
 });
 

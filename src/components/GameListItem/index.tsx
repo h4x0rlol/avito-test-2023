@@ -3,6 +3,7 @@ import { Card, Image } from 'antd';
 import IconText from '../IconText';
 import { GamesList } from '../../api';
 import { Link } from 'react-router-dom';
+import { formatDate } from '../../utils';
 
 type GameListItemProps = {
   item: GamesList[number];
@@ -40,7 +41,7 @@ export default function GameListItem({ item: game }: GameListItemProps) {
           >
             <IconText icon={BankOutlined} text={`Publisher: ${game.publisher}`} />
             <IconText icon={BookOutlined} text={`Genre: ${game.genre}`} />
-            <IconText icon={CalendarOutlined} text={`Release date: ${game.release_date}`} />
+            <IconText icon={CalendarOutlined} text={`Release date: ${formatDate(game.release_date)}`} />
           </div>
         </div>
       </Card>

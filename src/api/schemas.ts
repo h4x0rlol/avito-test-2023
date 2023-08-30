@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { LOCALE } from '../utils';
 
 export const gameIdSchema = z.coerce.number().int().nonnegative();
 
@@ -7,7 +6,7 @@ export const gamesListSchema = z
   .object({
     id: z.number(),
     title: z.string(),
-    release_date: z.coerce.date().transform(d => d.toLocaleDateString(LOCALE)),
+    release_date: z.string(),
     publisher: z.string(),
     genre: z.string(),
     thumbnail: z.string(),
@@ -23,7 +22,7 @@ export const gamePlatformsOptions = (
   Object.keys(gamePlatformsMatching) as Array<keyof typeof gamePlatformsMatching>
 ).map(k => ({ value: k, label: gamePlatformsMatching[k] }));
 
-export const gameTags = [
+export const gameCategories = [
   'mmorpg',
   'shooter',
   'strategy',
@@ -70,7 +69,7 @@ export const gameTags = [
   'horror',
   'mmorts',
 ] as const;
-export const gameTagsOptions = gameTags.map(t => ({ value: t, label: t }));
+export const gameCategoriesOptions = gameCategories.map(t => ({ value: t, label: t }));
 
 export const gameSortingMatching = {
   'release-date': 'Release date',

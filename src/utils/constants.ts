@@ -8,8 +8,6 @@ export const API_BASE_URL = 'https://free-to-play-games-database.p.rapidapi.com/
 
 export const MAX_SELECT_ITEMS = 50;
 
-export const LOCALE = 'ru';
-
 export const BREAKPOINTS = {
   laptop: '(min-width: 1024px)',
   tablet: '(min-width: 768px)',
