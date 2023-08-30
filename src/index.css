@@ -28,3 +28,7 @@ html {
 .ant-spin-container > :first-child {
   min-height: auto !important;
 }
+
+.ant-select-selection-placeholder {
+  color: rgba(0, 0, 0, 0.5) !important;
+}

@@ -1,4 +1,4 @@
-import { Card, Col, Result, Row, Space } from 'antd';
+import { Card, Col, Result, Row, Space, Spin } from 'antd';
 import Layout from '../../components/Layout';
 import { gamePlatformsOptions, gameSortingOptions, gameCategoriesOptions, useGetGamesListQuery } from '../../api';
 import Select from '../../components/Select';
@@ -17,7 +17,7 @@ function MainPageContent() {
   const filters = useAppSelector(state => state.gamesListFiltersReducer);
   const { setPlatform, setSorting, setCategory } = gamesListFiltersSlice.actions;
 
-  const { data, isFetching, isError, error } = useGetGamesListQuery(filters);
+  const { data, isFetching, isError, error, isLoading } = useGetGamesListQuery(filters);
 
   return (
     <Row
@@ -72,6 +72,19 @@ function MainPageContent() {
         </Card>
       </Col>
       <Col flex={isTablet ? '1 0 60%' : 'auto'}>
+        {isLoading && (
+          <div
+            style={{
+              display: 'flex',
+              width: '100%',
+              height: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Spin />
+          </div>
+        )}
         {!isError && !isFetching && (!data || data.length === 0) && (
           <Result
             status="404"
@@ -87,7 +100,9 @@ function MainPageContent() {
             }
           />
         )}
-        {!isError && <VirtualizedList items={data ?? []} ItemComponent={GameListItem} loading={isFetching} />}
+        {!isError && !isLoading && (
+          <VirtualizedList items={data ?? []} ItemComponent={GameListItem} loading={isFetching} />
+        )}
         {isError && <Error error={error} />}
       </Col>
     </Row>

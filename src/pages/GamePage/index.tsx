@@ -109,6 +109,7 @@ function GamePageContent({ id }: { id: string }) {
                 style={{
                   fontSize: '1.5rem',
                   color: '#ffff',
+                  whiteSpace: 'pre-wrap',
                 }}
               >
                 {game.title}

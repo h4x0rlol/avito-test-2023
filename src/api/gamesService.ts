@@ -1,10 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { API_BASE_URL } from '../utils';
+import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
+import { API_BASE_URL, MAX_RETIRES } from '../utils';
 import { GamesListFilters, GamesList, gamesListSchema, Game, gameSchema } from '.';
 
-export const gamesApi = createApi({
-  reducerPath: 'gamesApi',
-  baseQuery: fetchBaseQuery({
+const staggeredBaseQuery = retry(
+  fetchBaseQuery({
     baseUrl: API_BASE_URL,
     prepareHeaders: headers => {
       headers.set('X-RapidAPI-Key', import.meta.env.VITE_RAPID_API_KEY);
@@ -12,6 +11,14 @@ export const gamesApi = createApi({
       return headers;
     },
   }),
+  {
+    maxRetries: MAX_RETIRES,
+  },
+);
+
+export const gamesApi = createApi({
+  reducerPath: 'gamesApi',
+  baseQuery: staggeredBaseQuery,
   endpoints: builder => ({
     getGamesList: builder.query<GamesList, GamesListFilters>({
       query: filters => ({
