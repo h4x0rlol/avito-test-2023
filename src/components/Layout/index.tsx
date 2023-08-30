@@ -1,7 +1,7 @@
 import { Layout as AntdLayout, Space } from 'antd';
+import { ReactNode } from 'react';
 
 const { Header, Footer, Content } = AntdLayout;
-import { ReactNode } from 'react';
 
 type LayoutProps = {
   header: ReactNode;

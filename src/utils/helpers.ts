@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { LOCALES } from '.';
 
-export function isValidDate(date: unknown): date is Date {
+export function isValidDate(date: unknown): date is string | number | Date {
   // Because new Date(null) is valid
   if (date === null) {
     return false;

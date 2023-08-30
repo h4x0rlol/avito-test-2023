@@ -31,7 +31,7 @@ export default function VirtualizedList<T extends { id: string | number }>({
   containerHeight,
   itemHeight,
 }: VirtualizedListProps<T>) {
-  const listRef: Ref<ListRef> | undefined = useRef(null);
+  const listRef: Ref<ListRef> | null = useRef(null);
 
   const isTablet = useMediaQuery(BREAKPOINTS.tablet);
 

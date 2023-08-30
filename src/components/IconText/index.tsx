@@ -1,8 +1,8 @@
-import React from 'react';
 import { Space } from 'antd';
+import { FC, createElement } from 'react';
 
 type IconTextProps = {
-  icon: React.FC;
+  icon: FC;
   text: string;
 };
 
@@ -13,7 +13,7 @@ export default function IconText({ icon, text }: IconTextProps) {
         color: '#ffff',
       }}
     >
-      {React.createElement(icon)}
+      {createElement(icon)}
       {text}
     </Space>
   );

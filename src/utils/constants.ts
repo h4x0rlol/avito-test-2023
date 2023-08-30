@@ -10,8 +10,6 @@ export const MAX_RETIRES = 3;
 
 export const CACHE_TIME_IN_SECOND = 60 * 5;
 
-export const MAX_SELECT_ITEMS = 50;
-
 export const BREAKPOINTS = {
   laptop: '(min-width: 1024px)',
   tablet: '(min-width: 768px)',
