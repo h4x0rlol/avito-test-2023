@@ -1,6 +1,6 @@
-import VirtualList from 'rc-virtual-list';
+import VirtualList, { ListRef } from 'rc-virtual-list';
 import { List } from 'antd';
-import React from 'react';
+import React, { Ref, useEffect, useRef } from 'react';
 import { useMediaQuery } from '../../hooks';
 import { BREAKPOINTS } from '../../utils';
 
@@ -31,9 +31,17 @@ export default function VirtualizedList<T extends { id: string | number }>({
   containerHeight,
   itemHeight,
 }: VirtualizedListProps<T>) {
+  const listRef: Ref<ListRef> | undefined = useRef(null);
+
   const isTablet = useMediaQuery(BREAKPOINTS.tablet);
 
   const height = containerHeight ? containerHeight : isTablet ? getContainerHeight() : MOBILE_CONTAINER_HEIGHT;
+
+  useEffect(() => {
+    if (!listRef.current) return;
+
+    listRef.current.scrollTo({ index: 0 });
+  }, [items]);
 
   return (
     <List
@@ -43,7 +51,7 @@ export default function VirtualizedList<T extends { id: string | number }>({
       }}
       loading={loading}
     >
-      <VirtualList data={items} height={height} itemHeight={itemHeight ?? ITEM_HEIGHT} itemKey="id">
+      <VirtualList ref={listRef} data={items} height={height} itemHeight={itemHeight ?? ITEM_HEIGHT} itemKey="id">
         {item => (
           <List.Item key={item.id}>
             <ItemComponent item={item} />

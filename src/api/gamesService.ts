@@ -17,14 +17,9 @@ const staggeredBaseQuery = retry(
   },
 );
 
-export const gamesApi = createApi({
-  reducerPath: 'gamesApi',
+export const gamesListApi = createApi({
+  reducerPath: 'gamesListApi',
   baseQuery: staggeredBaseQuery,
-  extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === REHYDRATE) {
-      return action.payload[reducerPath];
-    }
-  },
   endpoints: builder => ({
     getGamesList: builder.query<GamesList, GamesListFilters>({
       query: filters => ({
@@ -35,8 +30,21 @@ export const gamesApi = createApi({
         return gamesListSchema.parse(response);
       },
     }),
+  }),
+});
+
+// Separate API for whitelist to persistent store
+export const gameApi = createApi({
+  reducerPath: 'gameApi',
+  keepUnusedDataFor: CACHE_TIME_IN_SECOND,
+  baseQuery: staggeredBaseQuery,
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === REHYDRATE) {
+      return action.payload?.[reducerPath];
+    }
+  },
+  endpoints: builder => ({
     getGameById: builder.query<Game, string>({
-      keepUnusedDataFor: CACHE_TIME_IN_SECOND,
       query: id => ({
         url: '/game',
         params: { id },
@@ -48,4 +56,5 @@ export const gamesApi = createApi({
   }),
 });
 
-export const { useGetGamesListQuery, useGetGameByIdQuery } = gamesApi;
+export const { useGetGamesListQuery } = gamesListApi;
+export const { useGetGameByIdQuery } = gameApi;
