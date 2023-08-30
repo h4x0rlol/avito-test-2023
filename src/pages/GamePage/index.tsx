@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import NotFound from '../NotFound';
-import { gameIdSchema } from '../../utils';
+import { gameIdSchema } from '../../api';
 
 export default function GamePage() {
   const { id } = useParams();

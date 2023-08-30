@@ -1,8 +1,9 @@
 import { Select as AntdSelect, SelectProps } from 'antd';
 import { useMediaQuery } from '../../hooks';
+import { BREAKPOINTS } from '../../utils';
 
 export default function Select(props: SelectProps) {
-  const matches = useMediaQuery('(min-width: 1024px)');
+  const isLaptop = useMediaQuery(BREAKPOINTS.laptop);
 
   return (
     <AntdSelect
@@ -11,7 +12,7 @@ export default function Select(props: SelectProps) {
       style={{
         width: '100%',
         height: '100%',
-        minWidth: matches ? 300 : '0',
+        minWidth: isLaptop ? 300 : '0',
         textAlign: 'left',
         ...props.style,
       }}

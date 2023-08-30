@@ -1,13 +1,15 @@
-import { Card, Col, Row, Space } from 'antd';
+import { Card, Col, Result, Row, Space } from 'antd';
 import Layout from '../../components/Layout';
-import VirtualizedGamesList from '../../components/VirtualizedGamesList';
-import { GamePlatformsOptions, GameSortingOptions, GameTagsOptions, useGetGamesListQuery } from '../../api';
+import { gamePlatformsOptions, gameSortingOptions, gameTagsOptions, useGetGamesListQuery } from '../../api';
 import Select from '../../components/Select';
 import Error from '../../components/Error';
 import { useMediaQuery } from '../../hooks';
+import VirtualizedList from '../../components/VirtualizedList';
+import GameListItem from '../../components/GameListItem';
+import { BREAKPOINTS, MAX_SELECT_ITEMS } from '../../utils';
 
 function MainPageContent() {
-  const matches = useMediaQuery('(min-width: 768px)');
+  const isTablet = useMediaQuery(BREAKPOINTS.tablet);
 
   const { data, isFetching, isError, error } = useGetGamesListQuery(
     {
@@ -15,7 +17,9 @@ function MainPageContent() {
       tags: ['mmorpg'],
       sorting: 'alphabetical',
     },
-    {},
+    {
+      skip: true,
+    },
   );
 
   return (
@@ -25,7 +29,7 @@ function MainPageContent() {
         height: '100%',
         display: 'flex',
         gap: '16px',
-        flexDirection: matches ? 'row' : 'column',
+        flexDirection: isTablet ? 'row' : 'column',
       }}
     >
       <Col flex="1 0 35%">
@@ -49,19 +53,34 @@ function MainPageContent() {
               width: '100%',
             }}
           >
-            <Select placeholder="Select a platform" options={GamePlatformsOptions} />
+            <Select placeholder="Select a platform" options={gamePlatformsOptions} />
             <Select
               placeholder="Select a genre"
               mode="multiple"
-              maxTagCount={matches ? 50 : 'responsive'}
-              options={GameTagsOptions}
+              maxTagCount={isTablet ? MAX_SELECT_ITEMS : 'responsive'}
+              options={gameTagsOptions}
             />
-            <Select placeholder="Sort by" options={GameSortingOptions} />
+            <Select placeholder="Sort by" options={gameSortingOptions} />
           </Space>
         </Card>
       </Col>
-      <Col flex={matches ? '1 0 60%' : 'auto'}>
-        {!isError && <VirtualizedGamesList games={data ?? []} loading={isFetching} />}
+      <Col flex={isTablet ? '1 0 60%' : 'auto'}>
+        {!isError && (!data || data.length === 0) && (
+          <Result
+            status="404"
+            subTitle={
+              <span
+                style={{
+                  color: '#ffff',
+                  fontSize: '1rem',
+                }}
+              >
+                No games were found with these filters
+              </span>
+            }
+          />
+        )}
+        {!isError && data && <VirtualizedList items={data} ItemComponent={GameListItem} loading={isFetching} />}
         {isError && <Error error={error} />}
       </Col>
     </Row>

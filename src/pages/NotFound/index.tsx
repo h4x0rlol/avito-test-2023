@@ -1,6 +1,6 @@
 import { Button, Result } from 'antd';
 import { Link } from 'react-router-dom';
-import { Paths } from '../../utils/';
+import { PATHS } from '../../utils/';
 
 export default function NotFound() {
   return (
@@ -9,7 +9,7 @@ export default function NotFound() {
       title="404"
       subTitle="Sorry, the page you visited does not exist."
       extra={
-        <Link to={Paths.MAIN}>
+        <Link to={PATHS.MAIN}>
           <Button type="primary">Back Home </Button>
         </Link>
       }
