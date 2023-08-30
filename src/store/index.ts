@@ -18,7 +18,12 @@ const persistConfig = {
   version: 1,
   storage,
   whitelist: [gameApi.reducerPath],
-  transforms: [expireReducer(gameApi.reducerPath, { expireSeconds: CACHE_TIME_IN_SECOND, autoExpire: true })],
+  transforms: [
+    expireReducer(gameApi.reducerPath, {
+      expireSeconds: CACHE_TIME_IN_SECOND,
+      autoExpire: true,
+    }),
+  ],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

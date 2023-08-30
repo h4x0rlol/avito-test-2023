@@ -17,3 +17,7 @@ export function formatDate(date: unknown, locale: keyof typeof LOCALES = LOCALES
 
   return null;
 }
+
+export function isEmptyObject(obj: object) {
+  return z.object({}).strict().safeParse(obj).success;
+}

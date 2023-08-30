@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
-import { API_BASE_URL, CACHE_TIME_IN_SECOND, MAX_RETIRES } from '../utils';
+import { API_BASE_URL, CACHE_TIME_IN_SECOND, MAX_RETIRES, isEmptyObject } from '../utils';
 import { GamesListFilters, GamesList, gamesListSchema, Game, gameSchema } from '.';
 import { REHYDRATE } from 'redux-persist';
 
@@ -40,6 +40,11 @@ export const gameApi = createApi({
   baseQuery: staggeredBaseQuery,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === REHYDRATE) {
+      // Check if persisted state expired, because cant pass undefined as initial state
+      // https://github.com/kamranahmedse/redux-persist-expire/issues/34
+      if (typeof action.payload?.[reducerPath] === 'object' && isEmptyObject(action.payload?.[reducerPath])) {
+        return undefined;
+      }
       return action.payload?.[reducerPath];
     }
   },
