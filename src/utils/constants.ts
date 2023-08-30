@@ -14,3 +14,8 @@ export const BREAKPOINTS = {
   laptop: '(min-width: 1024px)',
   tablet: '(min-width: 768px)',
 } as const;
+
+export const LOCALES = {
+  ru: 'ru',
+  en: 'en',
+} as const;

@@ -1,5 +1,9 @@
 {
   "name": "avito-test-2023",
+  "author": {
+    "name": "Dmitriy Khailov",
+    "email": "dmitriykkh@gmail.com"
+  },
   "private": true,
   "version": "0.0.0",
   "type": "module",

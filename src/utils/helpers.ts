@@ -1,10 +1,16 @@
 import { z } from 'zod';
+import { LOCALES } from '.';
 
 export function isValidDate(date: unknown): date is Date {
-  return !!date && z.coerce.date().safeParse(date).success;
+  // Because new Date(null) is valid
+  if (date === null) {
+    return false;
+  }
+
+  return z.coerce.date().safeParse(date).success;
 }
 
-export function formatDate(date: unknown, locale: string = 'ru') {
+export function formatDate(date: unknown, locale: keyof typeof LOCALES = LOCALES.ru) {
   if (isValidDate(date)) {
     return new Date(date).toLocaleDateString(locale);
   }

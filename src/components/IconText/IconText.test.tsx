@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
 import { CheckCircleOutlined } from '@ant-design/icons';
-import IconText from '.';
 import { describe, expect, test } from 'vitest';
+import IconText from '.';
 
-describe('IconText component Test', () => {
+describe('IconText component test', () => {
   test('Should render correctly', () => {
     const tree = render(<IconText icon={CheckCircleOutlined} text="test" />);
 
