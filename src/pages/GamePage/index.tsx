@@ -5,10 +5,11 @@ import Layout from '../../components/Layout';
 import { BREAKPOINTS, PATHS, formatDate } from '../../utils';
 import IconText from '../../components/IconText';
 import { AndroidOutlined, BankOutlined, BookOutlined, CalendarOutlined, LeftOutlined } from '@ant-design/icons';
-import { Card, Carousel, Divider, Image, Spin } from 'antd';
+import { Card, Carousel, Divider, Image } from 'antd';
 import Meta from 'antd/es/card/Meta';
 import Error from '../../components/Error';
 import { useMediaQuery } from '../../hooks';
+import Loader from '../../components/Loader';
 
 function GamePageHeader() {
   const isTablet = useMediaQuery(BREAKPOINTS.tablet);
@@ -52,19 +53,7 @@ function GamePageContent({ id }: { id: string }) {
   const { data: game, isFetching, isError, error } = useGetGameByIdQuery(id);
 
   if (isFetching) {
-    return (
-      <div
-        style={{
-          display: 'flex',
-          width: '100%',
-          height: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Spin />
-      </div>
-    );
+    return <Loader />;
   }
 
   if (isError && error) {

@@ -1,4 +1,4 @@
-import { Card, Col, Result, Row, Space, Spin } from 'antd';
+import { Card, Col, Result, Row, Space } from 'antd';
 import Layout from '../../components/Layout';
 import { gamePlatformsOptions, gameSortingOptions, gameCategoriesOptions, useGetGamesListQuery } from '../../api';
 import Select from '../../components/Select';
@@ -9,6 +9,7 @@ import GameListItem from '../../components/GameListItem';
 import { BREAKPOINTS } from '../../utils';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { gamesListFiltersSlice } from '../../store/reducers/GamesListFiltersSlice';
+import Loader from '../../components/Loader';
 
 function MainPageContent() {
   const isTablet = useMediaQuery(BREAKPOINTS.tablet);
@@ -72,19 +73,7 @@ function MainPageContent() {
         </Card>
       </Col>
       <Col flex={isTablet ? '1 0 60%' : 'auto'}>
-        {isLoading && (
-          <div
-            style={{
-              display: 'flex',
-              width: '100%',
-              height: '100%',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Spin />
-          </div>
-        )}
+        {isLoading && <Loader />}
         {!isError && !isFetching && (!data || data.length === 0) && (
           <Result
             status="404"
