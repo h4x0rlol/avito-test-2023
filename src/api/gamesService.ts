@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
-import { API_BASE_URL, MAX_RETIRES } from '../utils';
+import { API_BASE_URL, CACHE_TIME_IN_SECOND, MAX_RETIRES } from '../utils';
 import { GamesListFilters, GamesList, gamesListSchema, Game, gameSchema } from '.';
+import { REHYDRATE } from 'redux-persist';
 
 const staggeredBaseQuery = retry(
   fetchBaseQuery({
@@ -19,6 +20,11 @@ const staggeredBaseQuery = retry(
 export const gamesApi = createApi({
   reducerPath: 'gamesApi',
   baseQuery: staggeredBaseQuery,
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === REHYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
   endpoints: builder => ({
     getGamesList: builder.query<GamesList, GamesListFilters>({
       query: filters => ({
@@ -30,6 +36,7 @@ export const gamesApi = createApi({
       },
     }),
     getGameById: builder.query<Game, string>({
+      keepUnusedDataFor: CACHE_TIME_IN_SECOND,
       query: id => ({
         url: '/game',
         params: { id },

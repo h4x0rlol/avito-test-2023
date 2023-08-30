@@ -48,7 +48,10 @@ function GamePageHeader() {
 }
 
 function GamePageContent({ id }: { id: string }) {
-  const isTablet = useMediaQuery(BREAKPOINTS.tablet);
+  const isLaptop = useMediaQuery(BREAKPOINTS.laptop);
+  const isDesktop = useMediaQuery(BREAKPOINTS.desktop);
+
+  const carouselWidth = isDesktop ? '60vw' : isLaptop ? '50vw' : '90vw';
 
   const { data: game, isFetching, isError, error } = useGetGameByIdQuery(id);
 
@@ -162,7 +165,7 @@ function GamePageContent({ id }: { id: string }) {
           <Carousel
             lazyLoad="progressive"
             style={{
-              width: isTablet ? '50vw' : '90vw',
+              width: carouselWidth,
             }}
           >
             {game.screenshots.map(s => (
