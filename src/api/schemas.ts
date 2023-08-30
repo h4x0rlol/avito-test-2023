@@ -13,6 +13,30 @@ export const gamesListSchema = z
   })
   .array();
 
+export const gameSchema = z.object({
+  title: z.string(),
+  release_date: z.string(),
+  publisher: z.string(),
+  developer: z.string(),
+  genre: z.string(),
+  thumbnail: z.string(),
+  screenshots: z.array(
+    z.object({
+      id: z.number(),
+      image: z.string(),
+    }),
+  ),
+  minimum_system_requirements: z
+    .object({
+      os: z.string().nullish(),
+      processor: z.string().nullish(),
+      memory: z.string().nullish(),
+      graphics: z.string().nullish(),
+      storage: z.string().nullish(),
+    })
+    .nullish(),
+});
+
 export const gamePlatformsMatching = {
   pc: 'PC',
   browser: 'Browser',

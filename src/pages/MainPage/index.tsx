@@ -6,7 +6,7 @@ import Error from '../../components/Error';
 import { useMediaQuery } from '../../hooks';
 import VirtualizedList from '../../components/VirtualizedList';
 import GameListItem from '../../components/GameListItem';
-import { BREAKPOINTS, isFiltersEmpty } from '../../utils';
+import { BREAKPOINTS } from '../../utils';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { gamesListFiltersSlice } from '../../store/reducers/GamesListFiltersSlice';
 
@@ -17,11 +17,7 @@ function MainPageContent() {
   const filters = useAppSelector(state => state.gamesListFiltersReducer);
   const { setPlatform, setSorting, setCategory } = gamesListFiltersSlice.actions;
 
-  const isEmptyFilters = isFiltersEmpty(filters);
-
-  const { data, isFetching, isError, error } = useGetGamesListQuery(filters, {
-    skip: isEmptyFilters,
-  });
+  const { data, isFetching, isError, error } = useGetGamesListQuery(filters);
 
   return (
     <Row
@@ -33,7 +29,7 @@ function MainPageContent() {
         flexDirection: isTablet ? 'row' : 'column',
       }}
     >
-      <Col flex="1 0 35%">
+      <Col flex={isTablet ? '1 0 35%' : 'auto'}>
         <Card
           title="Filters"
           headStyle={{
@@ -76,7 +72,7 @@ function MainPageContent() {
         </Card>
       </Col>
       <Col flex={isTablet ? '1 0 60%' : 'auto'}>
-        {!isError && (!data || data.length === 0) && (
+        {!isError && !isFetching && (!data || data.length === 0) && (
           <Result
             status="404"
             subTitle={
@@ -86,14 +82,12 @@ function MainPageContent() {
                   fontSize: '1.2rem',
                 }}
               >
-                {isEmptyFilters
-                  ? 'To find some games select filters from the menu'
-                  : ' No games were found with these filters'}
+                No games were found with these filters
               </span>
             }
           />
         )}
-        {!isError && data && <VirtualizedList items={data} ItemComponent={GameListItem} loading={isFetching} />}
+        {!isError && <VirtualizedList items={data ?? []} ItemComponent={GameListItem} loading={isFetching} />}
         {isError && <Error error={error} />}
       </Col>
     </Row>

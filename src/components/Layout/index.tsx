@@ -16,7 +16,7 @@ const headerStyle: React.CSSProperties = {
   textAlign: 'center',
   color: 'rgba(255,255,255,.5)',
   height: '64px',
-  paddingInline: 50,
+  paddingInline: '16px',
   fontSize: '2rem',
   lineHeight: '64px',
   backgroundColor: '#272b30',

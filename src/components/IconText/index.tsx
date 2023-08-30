@@ -6,7 +6,7 @@ type IconTextProps = {
   text: string;
 };
 
-export default function IconTextFC({ icon, text }: IconTextProps) {
+export default function IconText({ icon, text }: IconTextProps) {
   return (
     <Space
       style={{

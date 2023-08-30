@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '../utils';
-import { GamesListFilters, GamesList, gamesListSchema } from '.';
+import { GamesListFilters, GamesList, gamesListSchema, Game, gameSchema } from '.';
 
 export const gamesApi = createApi({
   reducerPath: 'gamesApi',
@@ -22,7 +22,16 @@ export const gamesApi = createApi({
         return gamesListSchema.parse(response);
       },
     }),
+    getGameById: builder.query<Game, string>({
+      query: id => ({
+        url: '/game',
+        params: { id },
+      }),
+      transformResponse: response => {
+        return gameSchema.parse(response);
+      },
+    }),
   }),
 });
 
-export const { useGetGamesListQuery } = gamesApi;
+export const { useGetGamesListQuery, useGetGameByIdQuery } = gamesApi;

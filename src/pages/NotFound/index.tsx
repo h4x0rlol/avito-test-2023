@@ -2,16 +2,39 @@ import { Button, Result } from 'antd';
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../utils/';
 
-export default function NotFound() {
+type NotFoundProps = {
+  withBackButton?: boolean;
+};
+
+export default function NotFound({ withBackButton = true }: NotFoundProps) {
   return (
     <Result
       status="404"
-      title="404"
-      subTitle="Sorry, the page you visited does not exist."
+      title={
+        <span
+          style={{
+            color: '#ffff',
+          }}
+        >
+          404
+        </span>
+      }
+      subTitle={
+        <span
+          style={{
+            color: '#ffff',
+            fontSize: '1.2rem',
+          }}
+        >
+          Sorry, the page you visited does not exist
+        </span>
+      }
       extra={
-        <Link to={PATHS.MAIN}>
-          <Button type="primary">Back Home </Button>
-        </Link>
+        withBackButton ? (
+          <Link to={PATHS.MAIN}>
+            <Button>Back Home</Button>
+          </Link>
+        ) : null
       }
     />
   );
