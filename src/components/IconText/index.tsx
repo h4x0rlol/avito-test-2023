@@ -11,6 +11,8 @@ export default function IconText({ icon, text }: IconTextProps) {
     <Space
       style={{
         color: '#ffff',
+        textAlign: 'left',
+        alignItems: 'flex-start',
       }}
     >
       {createElement(icon)}

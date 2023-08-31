@@ -30,7 +30,7 @@ function MainPageContent() {
         flexDirection: isTablet ? 'row' : 'column',
       }}
     >
-      <Col flex={isTablet ? '1 0 35%' : 'auto'}>
+      <Col flex={isTablet ? '1 0 35%' : 'none'}>
         <Card
           title="Filters"
           headStyle={{

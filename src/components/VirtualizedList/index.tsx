@@ -4,7 +4,7 @@ import React, { Ref, useEffect, useRef } from 'react';
 import { useMediaQuery } from '../../hooks';
 import { BREAKPOINTS } from '../../utils';
 
-const MOBILE_CONTAINER_HEIGHT = 300;
+const MOBILE_CONTAINER_HEIGHT = 500;
 const ITEM_HEIGHT = 50;
 
 function getContainerHeight() {
