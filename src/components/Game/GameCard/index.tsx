@@ -112,7 +112,7 @@ export default function GameCard({ game }: GameCardProps) {
           {game.screenshots.map(s => (
             <div
               style={{
-                display: 'flex !important',
+                display: 'flex',
                 width: '100%',
                 height: '100%',
                 aspectRatio: '16 / 9',
