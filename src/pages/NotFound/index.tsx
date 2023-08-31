@@ -3,10 +3,16 @@ import { Link } from 'react-router-dom';
 import { PATHS } from '../../utils/';
 
 type NotFoundProps = {
+  title?: string;
+  text?: string;
   withBackButton?: boolean;
 };
 
-export default function NotFound({ withBackButton = true }: NotFoundProps) {
+export default function NotFound({
+  title = '404',
+  text = 'Sorry, the page you visited does not exist',
+  withBackButton = true,
+}: NotFoundProps) {
   return (
     <Result
       status="404"
@@ -16,7 +22,7 @@ export default function NotFound({ withBackButton = true }: NotFoundProps) {
             color: '#ffff',
           }}
         >
-          404
+          {title}
         </span>
       }
       subTitle={
@@ -26,7 +32,7 @@ export default function NotFound({ withBackButton = true }: NotFoundProps) {
             fontSize: '1.2rem',
           }}
         >
-          Sorry, the page you visited does not exist
+          {text}
         </span>
       }
       extra={

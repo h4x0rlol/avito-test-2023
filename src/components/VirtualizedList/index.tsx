@@ -1,6 +1,6 @@
 import VirtualList, { ListRef } from 'rc-virtual-list';
 import { List } from 'antd';
-import React, { Ref, useEffect, useRef } from 'react';
+import React, { Ref, useEffect, useMemo, useRef } from 'react';
 import { useMediaQuery } from '../../hooks';
 import { BREAKPOINTS } from '../../utils';
 
@@ -35,7 +35,17 @@ export default function VirtualizedList<T extends { id: string | number }>({
 
   const isTablet = useMediaQuery(BREAKPOINTS.tablet);
 
-  const height = containerHeight ? containerHeight : isTablet ? getContainerHeight() : MOBILE_CONTAINER_HEIGHT;
+  const height = useMemo(() => {
+    if (containerHeight) {
+      return containerHeight;
+    }
+
+    if (isTablet) {
+      return getContainerHeight();
+    }
+
+    return MOBILE_CONTAINER_HEIGHT;
+  }, [containerHeight, isTablet]);
 
   useEffect(() => {
     if (!listRef.current) return;

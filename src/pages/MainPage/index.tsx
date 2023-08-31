@@ -1,15 +1,16 @@
-import { Card, Col, Result, Row, Space } from 'antd';
+import { Card, Col, Row, Space } from 'antd';
 import Layout from '../../components/Layout';
 import { gamePlatformsOptions, gameSortingOptions, gameCategoriesOptions, useGetGamesListQuery } from '../../api';
 import Select from '../../components/Select';
 import Error from '../../components/Error';
 import { useMediaQuery } from '../../hooks';
 import VirtualizedList from '../../components/VirtualizedList';
-import GameListItem from '../../components/GameListItem';
+import GameListItem from '../../components/Game/GameListItem';
 import { BREAKPOINTS } from '../../utils';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { gamesListFiltersSlice } from '../../store/reducers/GamesListFiltersSlice';
 import Loader from '../../components/Loader';
+import NotFound from '../NotFound';
 
 function MainPageContent() {
   const isTablet = useMediaQuery(BREAKPOINTS.tablet);
@@ -75,19 +76,7 @@ function MainPageContent() {
       <Col flex={isTablet ? '1 0 60%' : 'auto'}>
         {isLoading && <Loader />}
         {!isError && !isFetching && (!data || data.length === 0) && (
-          <Result
-            status="404"
-            subTitle={
-              <span
-                style={{
-                  color: '#ffff',
-                  fontSize: '1.2rem',
-                }}
-              >
-                No games were found with these filters
-              </span>
-            }
-          />
+          <NotFound title="" text="No games were found with these filters" withBackButton={false} />
         )}
         {!isError && !isLoading && (
           <VirtualizedList items={data ?? []} ItemComponent={GameListItem} loading={isFetching} />

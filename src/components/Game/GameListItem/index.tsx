@@ -1,9 +1,9 @@
 import { BankOutlined, BookOutlined, CalendarOutlined } from '@ant-design/icons';
 import { Card, Image } from 'antd';
-import IconText from '../IconText';
-import { GamesList } from '../../api';
+import IconText from '../../IconText';
+import { GamesList } from '../../../api';
 import { Link } from 'react-router-dom';
-import { formatDate } from '../../utils';
+import { formatDate } from '../../../utils';
 
 type GameListItemProps = {
   item: GamesList[number];
