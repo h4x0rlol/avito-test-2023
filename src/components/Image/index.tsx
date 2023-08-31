@@ -5,7 +5,7 @@ type ImageProps = AntdImageProps & {
   withSkeleton?: boolean;
 };
 
-export default function ImageCin({ withSkeleton = false, ...props }: ImageProps) {
+export default function Image({ withSkeleton = false, ...props }: ImageProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   if (!withSkeleton) {
