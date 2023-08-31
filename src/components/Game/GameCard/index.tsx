@@ -1,10 +1,11 @@
 import { AndroidOutlined, BankOutlined, BookOutlined, CalendarOutlined } from '@ant-design/icons';
-import { Card, Divider, Carousel, Image } from 'antd';
+import { Card, Divider, Carousel } from 'antd';
 import Meta from 'antd/es/card/Meta';
 import { Game } from '../../../api';
 import { BREAKPOINTS, formatDate } from '../../../utils';
 import IconText from '../../IconText';
 import { useMediaQuery } from '../../../hooks';
+import Image from '../../Image';
 
 type GameCardProps = {
   game: Game;
@@ -33,7 +34,7 @@ export default function GameCard({ game }: GameCardProps) {
           border: '1px solid rgba(28,28,28,.6)',
           boxShadow: '0 .125rem .25rem rgba(0,0,0,.075)',
         }}
-        cover={<Image alt={game.title} src={game.thumbnail} />}
+        cover={<Image width={400} withSkeleton alt={game.title} src={game.thumbnail} />}
       >
         <Meta
           title={
@@ -109,7 +110,16 @@ export default function GameCard({ game }: GameCardProps) {
           }}
         >
           {game.screenshots.map(s => (
-            <Image key={s.id} loading="eager" width="100%" src={s.image} />
+            <div
+              style={{
+                display: 'flex !important',
+                width: '100%',
+                height: '100%',
+                aspectRatio: '16 / 9',
+              }}
+            >
+              <Image withSkeleton width="100%" src={s.image} />
+            </div>
           ))}
         </Carousel>
       )}

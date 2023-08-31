@@ -1,9 +1,10 @@
 import { BankOutlined, BookOutlined, CalendarOutlined } from '@ant-design/icons';
-import { Card, Image } from 'antd';
+import { Card } from 'antd';
 import IconText from '../../IconText';
 import { GamesList } from '../../../api';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../../../utils';
+import Image from '../../Image';
 
 type GameListItemProps = {
   item: GamesList[number];
@@ -31,7 +32,7 @@ export default function GameListItem({ item: game }: GameListItemProps) {
             gap: '2rem',
           }}
         >
-          <Image preview={false} width={200} src={game.thumbnail} alt={game.title} />
+          <Image preview={false} withSkeleton width={200} src={game.thumbnail} alt={game.title} />
           <div
             style={{
               display: 'flex',
