@@ -34,7 +34,7 @@ export default function GameCard({ game }: GameCardProps) {
           border: '1px solid rgba(28,28,28,.6)',
           boxShadow: '0 .125rem .25rem rgba(0,0,0,.075)',
         }}
-        cover={<Image width={400} withSkeleton alt={game.title} src={game.thumbnail} />}
+        cover={<Image withSkeleton width="100%" alt={game.title} src={game.thumbnail} />}
       >
         <Meta
           title={
@@ -111,6 +111,7 @@ export default function GameCard({ game }: GameCardProps) {
         >
           {game.screenshots.map(s => (
             <div
+              key={s.id}
               style={{
                 display: 'flex',
                 width: '100%',

@@ -32,7 +32,13 @@ export default function GameListItem({ item: game }: GameListItemProps) {
             gap: '2rem',
           }}
         >
-          <Image preview={false} withSkeleton width={200} src={game.thumbnail} alt={game.title} />
+          <div
+            style={{
+              width: 200,
+            }}
+          >
+            <Image preview={false} withSkeleton width="100%" src={game.thumbnail} alt={game.title} />
+          </div>
           <div
             style={{
               display: 'flex',
